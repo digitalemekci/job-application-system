@@ -13,11 +13,20 @@ class RoleMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next, string $role)
+  
+
+    public function handle(Request $request, Closure $next, $roles)
     {
-        if ($request->user()->role !== $role) {
+        if (!$request->user()) {
+            abort(403, 'Giriş yapmanız gerekiyor.');
+        }
+
+        $roleList = explode('|', $roles);
+
+        if (!in_array($request->user()->role, $roleList)) {
             abort(403, 'Bu alana erişiminiz yok.');
         }
+
         return $next($request);
     }
 }

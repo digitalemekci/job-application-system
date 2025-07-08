@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('job_posts', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); // İlanı açan firma
+            $table->foreignId('firma_id')->constrained('firmas')->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
             $table->string('title');
             $table->text('description')->nullable();
             $table->timestamps();

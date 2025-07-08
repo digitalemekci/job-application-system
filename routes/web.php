@@ -4,7 +4,7 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 
-Route::middleware(['auth', 'role:company'])->group(function () {
+Route::middleware(['auth', 'role:hr|company'])->group(function () {
     Route::view('/firma/dashboard', 'livewire.firma.dashboard')->name('firma.dashboard');
 });
 

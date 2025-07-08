@@ -12,6 +12,7 @@ class JobPost extends Model
 
     protected $fillable = [
         'user_id',
+        'firma_id',
         'title',
         'description',
     ];
@@ -19,5 +20,10 @@ class JobPost extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function firma()
+    {
+        return $this->belongsTo(Firma::class, 'firma_id');
     }
 }

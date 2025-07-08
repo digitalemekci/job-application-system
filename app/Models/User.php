@@ -45,4 +45,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function firma()
+    {
+        return $this->belongsTo(Firma::class, 'firma_id');
+    }
 }
