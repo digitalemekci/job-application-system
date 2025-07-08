@@ -20,7 +20,7 @@ class Ilanlar extends Component
 
     public function loadIlanlar()
     {
-        $this->ilanlar = JobPost::where('user_id', auth()->id())->latest()->get();
+         $this->ilanlar = JobPost::where('firma_id', Auth::user()->firma_id)->get();
     }
 
    public function create()
