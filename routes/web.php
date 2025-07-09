@@ -4,6 +4,8 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
 
+Route::redirect('/', '/login');
+
 Route::middleware(['auth', 'role:hr|company'])->group(function () {
     Route::view('/firma/dashboard', 'livewire.firma.dashboard')->name('firma.dashboard');
 });
