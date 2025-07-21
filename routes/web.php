@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use Livewire\Livewire;
+use App\Livewire\FirmaAccounts;
 
 Route::redirect('/', '/login');
 
@@ -18,6 +19,9 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::view('/dashboard', 'dashboard')->name('dashboard');
 });
 
+Route::middleware(['auth', 'role:company'])->group(function () {
+    Route::get('/firma/accounts', \App\Livewire\FirmaAccounts::class)->name('firma.accounts');
+});
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');

@@ -34,6 +34,16 @@
                     </x-slot>
 
                     <x-slot name="content">
+
+
+                    @auth
+                        @if(auth()->user()->role === 'company')
+                            <x-dropdown-link :href="route('firma.accounts')">
+                                {{ auth()->user()->firma->name }}
+                            </x-dropdown-link>
+                        @endif
+                    @endauth
+
                         <x-dropdown-link :href="route('profile.edit')">
                             {{ __('Profile') }}
                         </x-dropdown-link>
