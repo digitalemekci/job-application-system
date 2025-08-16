@@ -10,6 +10,10 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+use App\Livewire\FirmaAccounts;
+use App\Livewire\Auth\CitizenRegister;
+use App\Livewire\Auth\CitizenLogin;
+use App\Livewire\Citizen\CvUpload;
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])
@@ -33,6 +37,12 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
         ->name('password.store');
+
+    Route::get('/register/citizen', CitizenRegister::class)
+        ->name('register.citizen');
+
+    Route::get('/login/citizen', CitizenLogin::class)
+        ->name('login.citizen');
 });
 
 Route::middleware('auth')->group(function () {
@@ -56,4 +66,32 @@ Route::middleware('auth')->group(function () {
 
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
+
+    Route::get('/cv/upload', CvUpload::class)
+        ->name('cv.upload');
+
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+ 
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+    
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
+});
+
+Route::middleware(['auth', 'role:hr|company'])->group(function () {
+    Route::view('/firma/dashboard', 'livewire.firma.dashboard')->name('firma.dashboard');
+});
+
+Route::middleware(['auth', 'role:citizen'])->group(function () {
+    Route::view('/vatandas/dashboard', 'vatandas.dashboard')->name('vatandas.dashboard');
+});
+
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::view('/dashboard', 'dashboard')->name('dashboard');
+});
+
+Route::middleware(['auth', 'role:company'])->group(function () {
+    Route::get('/firma/accounts', \App\Livewire\FirmaAccounts::class)->name('firma.accounts');
 });
