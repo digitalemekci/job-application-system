@@ -8,20 +8,35 @@ class CitizenRegister extends Component
 {
     public $name, $email, $password, $password_confirmation;
 
-    public function register()
+     /**
+     * Display the registration view.
+     */
+    public function create(): View
     {
-        $this->validate([
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed|min:6',
+        return view('auth.register');
+    }
+
+    /**
+     * Handle an incoming registration request.
+     *
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function store(Request $request): RedirectResponse
+    {
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
         ]);
 
         $user = User::create([
-            'name' => $this->name,
-            'email' => $this->email,
-            'password' => bcrypt($this->password),
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
             'type' => 'citizen',
         ]);
+
+        event(new Registered($user));
 
         Auth::login($user);
 
@@ -30,6 +45,6 @@ class CitizenRegister extends Component
 
     public function render()
     {
-        return view('livewire.auth.citizen-register')->layout('layouts.app');
+        return view('livewire.auth.citizen-register')->layout('layouts.guest');
     }
 }

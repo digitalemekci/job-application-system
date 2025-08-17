@@ -8,6 +8,6 @@ class CitizenLogin extends Component
 {
     public function render()
     {
-        return view('livewire.auth.citizen-login')->layout('layouts.app');
+        return view('livewire.auth.citizen-login')->layout('layouts.guest');
     }
 }
