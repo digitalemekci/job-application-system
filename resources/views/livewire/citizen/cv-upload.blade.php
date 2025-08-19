@@ -7,7 +7,7 @@
         </div>
     @endif
 
-    <form wire:submit.prevent="upload">
+    <form wire:submit.prevent="upload" enctype="multipart/form-data">
         <div class="mb-4">
             <label for="cv" class="block font-semibold mb-2">CV (PDF)</label>
             <input type="file" id="cv" wire:model="cv" accept="application/pdf" class="w-full border p-2 rounded">

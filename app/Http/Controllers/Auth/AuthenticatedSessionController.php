@@ -34,7 +34,7 @@ class AuthenticatedSessionController extends Controller
             case 'hr':
                 return redirect()->intended('/firma/dashboard');
             case 'citizen':
-                return redirect()->intended('/vatandas/dashboard');
+                return redirect()->intended('/citizen/dashboard');
             default:
                 return redirect()->intended('/login');
         }

@@ -67,8 +67,7 @@ Route::middleware('auth')->group(function () {
     Route::post('logout', [AuthenticatedSessionController::class, 'destroy'])
         ->name('logout');
 
-    Route::get('/cv/upload', CvUpload::class)
-        ->name('cv.upload');
+    
 
     Route::get('/profile', [ProfileController::class, 'edit'])
         ->name('profile.edit');
@@ -85,7 +84,10 @@ Route::middleware(['auth', 'role:hr|company'])->group(function () {
 });
 
 Route::middleware(['auth', 'role:citizen'])->group(function () {
-    Route::view('/vatandas/dashboard', 'vatandas.dashboard')->name('vatandas.dashboard');
+    Route::view('/citizen/dashboard', 'livewire.citizen.dashboard')
+        ->name('citizen.dashboard');
+    Route::get('/citizen/cv/upload', CvUpload::class)
+        ->name('cv.upload');
 });
 
 Route::middleware(['auth', 'role:admin'])->group(function () {
